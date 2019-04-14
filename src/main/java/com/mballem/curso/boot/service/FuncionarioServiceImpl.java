@@ -33,7 +33,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public Funcionario buscarPoId(Long id) {
+	public Funcionario buscarPorId(Long id) {
 		return dao.findById(id);
 	}
 

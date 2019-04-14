@@ -48,11 +48,11 @@ public class FuncionarioController {
 		return "redirect:/funcionarios/cadastrar";
 	}
 	
-	/*@GetMapping("/editar/{id}")
+	@GetMapping("/editar/{id}")
 	public String preEditar(@PathVariable("id") Long id, ModelMap model) {
 		model.addAttribute("funcionario", funcionarioService.buscarPorId(id));
 		return "funcionario/cadastro";
-	}*/
+	}
 	
 	@PostMapping("/editar")
 	public String editar(Funcionario funcionario, RedirectAttributes attr) {
