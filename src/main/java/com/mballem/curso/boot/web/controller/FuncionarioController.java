@@ -25,7 +25,7 @@ import com.mballem.curso.boot.domain.Funcionario;
 import com.mballem.curso.boot.domain.UF;
 import com.mballem.curso.boot.service.CargoService;
 import com.mballem.curso.boot.service.FuncionarioService;
-//import com.mballem.curso.boot.web.validator.FuncionarioValidator;
+import com.mballem.curso.boot.web.validator.FuncionarioValidator;
 
 @Controller
 @RequestMapping("/funcionarios")
@@ -36,10 +36,10 @@ public class FuncionarioController {
 	@Autowired
 	private CargoService cargoService;
 	
-	/*@InitBinder
+	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		binder.addValidators(new FuncionarioValidator());
-	}*/
+	}
 	
 	@GetMapping("/cadastrar")
 	public String cadastrar(Funcionario funcionario) {
