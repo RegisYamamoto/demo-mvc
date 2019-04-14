@@ -2,9 +2,12 @@ package com.mballem.curso.boot.web.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +41,12 @@ public class CargoController {
 	}
 	
 	@PostMapping("/salvar")
-	public String salvar(Cargo cargo, RedirectAttributes attr) {
+	public String salvar(@Valid Cargo cargo, BindingResult result, RedirectAttributes attr) {
+		
+		if (result.hasErrors()) {
+			return "/cargo/cadastro";
+		}
+		
 		cargoService.salvar(cargo);
 		attr.addFlashAttribute("success", "Cargo inserido com sucesso.");
 		return "redirect:/cargos/cadastrar";
@@ -51,7 +59,12 @@ public class CargoController {
 	}
 	
 	@PostMapping("/editar")
-	public String editar(Cargo cargo, RedirectAttributes attr) {
+	public String editar(@Valid Cargo cargo, BindingResult result, RedirectAttributes attr) {
+		
+		if (result.hasErrors()) {
+			return "/cargo/cadastro";
+		}	
+		
 		cargoService.editar(cargo);
 		attr.addFlashAttribute("success", "Registro atualizado com sucesso.");
 		return "redirect:/cargos/cadastrar";
@@ -60,12 +73,11 @@ public class CargoController {
 	@GetMapping("/excluir/{id}")
 	public String excluir(@PathVariable("id") Long id, RedirectAttributes attr) {
 		if (cargoService.cargoTemFuncionarios(id)) {
-			attr.addAttribute("fail", "Cargo não excluído. Tem funcionários(s) vinculado(s).");
+			attr.addFlashAttribute("fail", "Cargo não excluido. Tem funcionário(s) vinculado(s).");
 		} else {
 			cargoService.excluir(id);
-			attr.addFlashAttribute("success", "Cargo excluído com sucesso.");
+			attr.addFlashAttribute("success", "Cargo excluido com sucesso.");
 		}
-		
 		return "redirect:/cargos/listar";
 	}
 	
